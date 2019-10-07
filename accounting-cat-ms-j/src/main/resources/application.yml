@@ -3,11 +3,17 @@ server:
 
 spring:
   jpa:
-    database-platform: postgresql
     show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
-    data-username: postgres
-    data-password: password
-    url:
-
+    username: postgres
+    password: password
+    url: jdbc:postgresql://localhost:5432/postgres
