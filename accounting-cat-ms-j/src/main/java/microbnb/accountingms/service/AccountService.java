@@ -16,7 +16,7 @@ public class AccountService {
   private final AccountRepository accountRepository;
 
   @Transactional
-  public Account createAccount(Account account) {
+  public Account saveAccount(Account account) {
     return accountRepository.save(account);
   }
 
@@ -29,4 +29,10 @@ public class AccountService {
   public List<Account> getAccounts() {
     return List.ofAll(accountRepository.findAll());
   }
+
+  @Transactional
+  public void remove(long id) {
+    accountRepository.deleteById(id);
+  }
+
 }
