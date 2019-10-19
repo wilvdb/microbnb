@@ -2,6 +2,7 @@ package microbnb.accountingms.controller;
 
 import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
+import microbnb.accountingms.exception.NotFoundException;
 import microbnb.accountingms.model.dto.AccountInput;
 import microbnb.accountingms.model.dto.ResponseData;
 import microbnb.accountingms.model.entity.Account;
@@ -37,12 +38,8 @@ public class AccountingController {
   public ResponseEntity getAccount(@PathVariable long id) {
     Optional<Account> account = accountService.getAccount(id);
 
-    if(account.isPresent()) {
-      ResponseData<Account> data = new ResponseData<>(account.get());
+      var data = new ResponseData<>(account.orElseThrow(NotFoundException::new));
       return ResponseEntity.ok(data);
-    }
-
-    return ResponseEntity.notFound().build();
   }
 
   @PostMapping(consumes = "application/json")
@@ -66,8 +63,7 @@ public class AccountingController {
   @PutMapping(value = "/{id}", consumes = "application/json")
   public ResponseEntity updateAccount(@PathVariable long id, AccountInput input) {
     var accOpt = accountService.getAccount(id);
-    if (accOpt.isPresent()) {
-      var acc = accOpt.get();
+      var acc = accOpt.orElseThrow(NotFoundException::new);
 
       acc.setBirthday(input.getBirthday());
       acc.setEmail(input.getEmail());
@@ -77,8 +73,5 @@ public class AccountingController {
       accountService.saveAccount(acc);
 
       return ResponseEntity.accepted().build();
-    }
-
-    return ResponseEntity.notFound().build();
   }
 }
