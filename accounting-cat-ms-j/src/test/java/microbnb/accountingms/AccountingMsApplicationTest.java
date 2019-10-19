@@ -3,6 +3,7 @@ package microbnb.accountingms;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vavr.collection.List;
 import microbnb.accountingms.model.dto.AccountInput;
+import microbnb.accountingms.model.dto.ResponseData;
 import microbnb.accountingms.model.entity.Account;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,7 +56,7 @@ class AccountingMsApplicationTest {
   @Order(2)
   @Test
   void should_not_found_account_when_looking_for_not_existing_account() {
-    ResponseEntity<Account> response = restTemplate.getForEntity("http://localhost:" + port + "/v1/accounts/1", Account.class);
+    ResponseEntity<ResponseData> response = restTemplate.getForEntity("http://localhost:" + port + "/v1/accounts/1", ResponseData.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
   }
@@ -63,8 +64,8 @@ class AccountingMsApplicationTest {
   @Order(3)
   @Test
   void should_not_retrieve_any_account() {
-    ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:" + port + "/v1/accounts", List.class);
+    ResponseEntity<ResponseData> response = restTemplate.getForEntity("http://localhost:" + port + "/v1/accounts", ResponseData.class);
 
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 }

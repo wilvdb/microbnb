@@ -1,7 +1,9 @@
 package microbnb.accountingms.controller;
 
+import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 import microbnb.accountingms.model.dto.AccountInput;
+import microbnb.accountingms.model.dto.ResponseData;
 import microbnb.accountingms.model.entity.Account;
 import microbnb.accountingms.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Validated
@@ -22,12 +25,24 @@ public class AccountingController {
 
   @GetMapping
   public ResponseEntity getAccounts() {
-    return ResponseEntity.ok(accountService.getAccounts());
+    List<Account> accounts = accountService.getAccounts();
+    if(accounts.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+
+    return ResponseEntity.ok(new ResponseData<>(accounts));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity getAccount(@PathVariable long id) {
-    return ResponseEntity.of(accountService.getAccount(id));
+    Optional<Account> account = accountService.getAccount(id);
+
+    if(account.isPresent()) {
+      ResponseData<Account> data = new ResponseData<>(account.get());
+      return ResponseEntity.ok(data);
+    }
+
+    return ResponseEntity.notFound().build();
   }
 
   @PostMapping(consumes = "application/json")
