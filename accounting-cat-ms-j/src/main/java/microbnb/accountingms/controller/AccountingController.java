@@ -15,7 +15,6 @@ import java.net.URI;
 @RestController
 @RequestMapping(
     value = "/v1/accounts",
-    consumes = "application/json",
     produces = "application/json")
 public class AccountingController {
 
@@ -31,7 +30,7 @@ public class AccountingController {
     return ResponseEntity.of(accountService.getAccount(id));
   }
 
-  @PostMapping
+  @PostMapping(consumes = "application/json")
   public ResponseEntity createAccount(AccountInput input) {
     var acc = new Account();
     acc.setBirthday(input.getBirthday());
@@ -49,7 +48,7 @@ public class AccountingController {
     return ResponseEntity.noContent().build();
   }
 
-  @PutMapping("/{id}")
+  @PutMapping(value = "/{id}", consumes = "application/json")
   public ResponseEntity updateAccount(@PathVariable long id, AccountInput input) {
     var accOpt = accountService.getAccount(id);
     if (accOpt.isPresent()) {
