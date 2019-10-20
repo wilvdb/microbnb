@@ -2,6 +2,7 @@ package microbnb.accountingms.controller;
 
 import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import microbnb.accountingms.exception.NotFoundException;
 import microbnb.accountingms.model.dto.AccountInput;
 import microbnb.accountingms.model.dto.ResponseData;
