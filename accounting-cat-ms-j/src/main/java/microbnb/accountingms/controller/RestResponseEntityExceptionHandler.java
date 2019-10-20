@@ -10,13 +10,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionHandler
-        extends ResponseEntityExceptionHandler {
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
-                "No resource available", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("No resource available", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
-
 }

@@ -26,5 +26,4 @@ public class Account {
 
     @Column(name = "")
     LocalDate birthday;
-
 }

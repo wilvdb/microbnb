@@ -21,11 +21,7 @@ public class AccountInput {
     @Pattern(regexp = "\\w{0,50}")
     String lastName;
 
-    @NotNull
-    @Email
-    String email;
+    @NotNull @Email String email;
 
-    @NotNull
-    @Past
-    LocalDate birthday;
+    @NotNull @Past LocalDate birthday;
 }
