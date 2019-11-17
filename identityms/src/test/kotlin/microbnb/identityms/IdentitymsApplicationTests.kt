@@ -17,7 +17,6 @@ import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.net.URI
 import java.time.LocalDate
@@ -49,9 +48,10 @@ class IdentitymsApplicationTests(@Autowired val restTemplate: TestRestTemplate, 
 
 	@Order(3)
 	@Test
-	fun `should not retrieve any account`() {
+	fun `should retrieve all account`() {
 		val response = restTemplate.getForEntity<ResponseData<List<Identity>>>("http://localhost:$port/v1/identities")
 
-		assertEquals(HttpStatus.NO_CONTENT, response.statusCode)
+		assertEquals(HttpStatus.OK, response.statusCode)
+		assertEquals(response.body?.data?.size, 1)
 	}
 }
