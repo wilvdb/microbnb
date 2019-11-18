@@ -1,0 +1,27 @@
+@startuml
+
+[microbnb-react] as REACT
+[identityms] as IDMS
+[elasticsearch] as ELASTIC
+[searchms] as SEARCH
+[offer-ingest] as INGEST
+[offerms] as OFFER
+
+database "Postgres" as DB {
+    frame "Identity" as IDSCH {
+    }
+
+    frame "Offer" as OFFERSCH {
+    }
+}
+
+REACT --> IDMS
+REACT --> SEARCH
+REACT --> OFFER
+IDMS ..> IDSCH
+SEARCH ..> ELASTIC
+OFFER ..> OFFERSCH
+INGEST ..> OFFERSCH
+INGEST ..> ELASTIC
+
+@enduml
